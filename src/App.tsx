@@ -10,7 +10,7 @@ function App() {
       <CssBaseline/>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" >
+          <Typography variant="h6">
             TODO
           </Typography>
         </Toolbar>
