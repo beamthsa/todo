@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import ClearIcon from '@material-ui/icons/Clear';
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 
 interface TodoInputProps {
   onSubmit?: (value: string) => void;
@@ -47,10 +47,10 @@ const TodoInput: React.FC<TodoInputProps> = ({ onSubmit }) => {
           value.length > 0 && (
             <InputAdornment position="end">
               <IconButton
+                type="submit"
                 color="primary"
-                aria-label="add to to-do list"
-                onClick={onClear}>
-                <ClearIcon/>
+                aria-label="add to to-do list">
+                <KeyboardReturnIcon/>
               </IconButton>
             </InputAdornment>
           )}
