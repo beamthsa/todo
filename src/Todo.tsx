@@ -3,8 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import TodoInput from './components/TodoInput';
-import TodoList, { TodoListProps } from './components/TodoList';
-import { Todo as TodoData } from './types/todo.d'; 
+import TodoList from './components/TodoList';
+import useTodo from './hooks/useTodo';
 
 const useStyles = makeStyles(
   theme => ({
@@ -22,19 +22,10 @@ const useStyles = makeStyles(
 
 function Todo() {
   const classes = useStyles();
-
-  const onSubmit = (value: string) => {
-    console.log(value);
-  };
-
-  const handleChange: TodoListProps['onChange'] = (ids) => {
-    console.log(ids);
-  };
-
-  const data: TodoData[] = [
-    {id: '1b3b1734-5ca3-4ec6-b5d2-d32131b9fffd', name: 'Shawn'},
-    {id: '7784bf74-366d-4b94-a459-2e615f7756d8', name: 'National Marketing Officer'}
-  ]
+  const {
+    data, addTodo, removeTodo,
+    activeIds, toggleTodo,
+  } = useTodo();
 
   return (
     <Container maxWidth="sm" className={classes.container}>
@@ -43,12 +34,14 @@ function Todo() {
       </Typography>
 
       <div className={classes.inputContainer}>
-        <TodoInput onSubmit={onSubmit} />
+        <TodoInput onSubmit={addTodo} />
       </div>
 
       <TodoList
-        onChange={handleChange}
-        data={data} />
+        data={data}
+        activeIds={activeIds}
+        onDelete={removeTodo}
+        onToggle={toggleTodo} />
     </Container>
   );
 }
