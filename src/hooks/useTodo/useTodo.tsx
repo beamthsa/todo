@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import useLocalStorage from '../useLocalStorage';
 import { Todo as TodoData } from '../../types/todo.d';
 
 export default function useTodo() {
-  const [data, setData] = useState<TodoData[]>([]);
-  const [activeIds, setActiveIds] = useState<string[]>([]);
+  const [todo, setTodo] = useLocalStorage('TODO', []);
+  const [data, setData] = useState<TodoData[]>(todo);
+
+  const [activeTodo, setActiveTodo] = useLocalStorage('ACTIVE_TODO', []);
+  const [activeIds, setActiveIds] = useState<string[]>(activeTodo);
 
   function addTodo(value: string) {
     const newValue = {
@@ -52,6 +56,14 @@ export default function useTodo() {
 
     setActiveIds(newIds);
   }
+
+  useEffect(() => {
+    setTodo(data);
+  }, [data, setTodo]);
+
+  useEffect(() => {
+    setActiveTodo(activeIds);
+  }, [activeIds, setActiveTodo]);
 
   return {
     data,

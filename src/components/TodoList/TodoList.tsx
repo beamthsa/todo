@@ -45,7 +45,7 @@ const TodoList: React.FC<TodoListProps> = (props) => {
 
   const handleDelete = (value: string) => () => {
     onDelete(value);
-  }
+  };
 
   return (
     <List>
