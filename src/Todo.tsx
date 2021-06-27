@@ -1,5 +1,8 @@
+import { useState, useMemo } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup, { ToggleButtonGroupProps } from '@material-ui/lab/ToggleButtonGroup';
 import { makeStyles } from '@material-ui/core/styles';
 
 import TodoInput from './components/TodoInput';
@@ -27,6 +30,23 @@ function Todo() {
     activeIds, toggleTodo,
   } = useTodo();
 
+  const [todoState, setTodoState] = useState< 'all' | 'active' | 'completed'>('all');
+  const toggleState: ToggleButtonGroupProps['onChange'] = (_event, value) => {
+    setTodoState(value);
+  };
+
+  const updatedTodo = useMemo(() => {
+    if (todoState === 'all') {
+      return data;
+    }
+
+    if (todoState === 'completed') {
+      return data.filter(value =>  activeIds.includes(value.id));
+    }
+
+    return data.filter(value => !activeIds.includes(value.id));
+  }, [data, todoState, activeIds]);
+
   return (
     <Container maxWidth="sm" className={classes.container}>
       <Typography variant="h4" align="center">
@@ -38,10 +58,26 @@ function Todo() {
       </div>
 
       <TodoList
-        data={data}
+        data={updatedTodo}
         activeIds={activeIds}
         onDelete={removeTodo}
         onToggle={toggleTodo} />
+
+      <ToggleButtonGroup
+        value={todoState}
+        onChange={toggleState}
+        size="small"
+        exclusive>
+        <ToggleButton value="all">
+          All
+        </ToggleButton>
+        <ToggleButton value="active">
+          Active
+        </ToggleButton>
+        <ToggleButton value="completed">
+          Completed
+        </ToggleButton>
+      </ToggleButtonGroup>
     </Container>
   );
 }
