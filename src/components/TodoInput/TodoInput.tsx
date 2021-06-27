@@ -10,13 +10,16 @@ interface TodoInputProps {
 }
 
 const TodoInput: React.FC<TodoInputProps> = ({ onSubmit }) => {
-  const [value, setValue] = useState<string>('')
-  const onClear = () => setValue('')
+  const [value, setValue] = useState<string>('');
+  const onClear = () => setValue('');
 
   const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-    onSubmit?.(value)
-    onClear()
+    event.preventDefault();
+
+    if (value !== '') {
+      onSubmit?.(value);
+      onClear();
+    }
   }
 
   return (
