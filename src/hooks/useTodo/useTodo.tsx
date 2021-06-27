@@ -44,6 +44,10 @@ export default function useTodo() {
     }
   }
 
+  function resetTodo() {
+    setData([]);
+  }
+
   function toggleTodo(id: string) {
     const currentIndex = activeIds.indexOf(id);
     const newIds = [...activeIds];
@@ -69,6 +73,7 @@ export default function useTodo() {
     data,
     addTodo,
     removeTodo,
+    resetTodo,
 
     activeIds,
     toggleTodo,

@@ -1,8 +1,11 @@
 import { useState, useMemo } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup, { ToggleButtonGroupProps } from '@material-ui/lab/ToggleButtonGroup';
+import Fab from '@material-ui/core/Fab';
+import ClearAllRoundedIcon from '@material-ui/icons/ClearAllRounded';
 import { makeStyles } from '@material-ui/core/styles';
 
 import TodoInput from './components/TodoInput';
@@ -27,7 +30,7 @@ function Todo() {
   const classes = useStyles();
   const {
     data, addTodo, removeTodo,
-    activeIds, toggleTodo,
+    resetTodo, activeIds, toggleTodo,
   } = useTodo();
 
   const [todoState, setTodoState] = useState< 'all' | 'active' | 'completed'>('all');
@@ -63,21 +66,36 @@ function Todo() {
         onDelete={removeTodo}
         onToggle={toggleTodo} />
 
-      <ToggleButtonGroup
-        value={todoState}
-        onChange={toggleState}
-        size="small"
-        exclusive>
-        <ToggleButton value="all">
-          All
-        </ToggleButton>
-        <ToggleButton value="active">
-          Active
-        </ToggleButton>
-        <ToggleButton value="completed">
-          Completed
-        </ToggleButton>
-      </ToggleButtonGroup>
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center">
+        <ToggleButtonGroup
+          value={todoState}
+          onChange={toggleState}
+          size="small"
+          exclusive>
+          <ToggleButton value="all">
+            All
+          </ToggleButton>
+          <ToggleButton value="active">
+            Active
+          </ToggleButton>
+          <ToggleButton value="completed">
+            Completed
+          </ToggleButton>
+        </ToggleButtonGroup>
+
+        <Fab
+          variant="extended"
+          size="small"
+          color="default"
+          onClick={resetTodo}>
+          <ClearAllRoundedIcon />
+          Clear
+        </Fab>
+      </Grid>
     </Container>
   );
 }

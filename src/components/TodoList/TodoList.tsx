@@ -21,7 +21,7 @@ export interface TodoListProps {
 
 const useStyles = makeStyles(
   theme => ({
-    buttonDelete: {
+    deleteButton: {
       '&:hover': {
         color: theme.palette.error.main,
       }
@@ -80,7 +80,7 @@ const TodoList: React.FC<TodoListProps> = (props) => {
 
             <ListItemSecondaryAction>
               <IconButton
-                className={classes.buttonDelete}
+                className={classes.deleteButton}
                 edge="end"
                 onClick={handleDelete(currentId)}>
                 <DeleteForeverRoundedIcon /> 
