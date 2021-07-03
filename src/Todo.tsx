@@ -91,6 +91,7 @@ function Todo() {
           variant="extended"
           size="small"
           color="default"
+          disabled={data.length === 0}
           onClick={resetTodo}>
           <ClearAllRoundedIcon />
           Clear
